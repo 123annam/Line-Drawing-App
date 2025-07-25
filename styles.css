@@ -1,14 +1,47 @@
 body {
   font-family: Arial, sans-serif;
+  background: #f4f4f4;
   text-align: center;
-  margin-top: 30px;
+  margin: 0;
+  padding: 0;
 }
 
-#canvas {
-  border: 1px solid #000;
-  cursor: crosshair;
+h2 {
+  margin-top: 30px;
+  font-size: 28px;
+  color: #333;
 }
 
 #toolbar {
-  margin-bottom: 10px;
+  margin: 20px 0;
+}
+
+#toolbar button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: linear-gradient(to right, #ff6a00, #ee0979);
+  color: white;
+  transition: transform 0.2s;
+}
+
+#toolbar button:hover {
+  transform: scale(1.05);
+}
+
+.canvas-frame {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #00f260, #0575e6); /* colorful border */
+}
+
+#canvas {
+  border: 5px solid white; /* inner border */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }

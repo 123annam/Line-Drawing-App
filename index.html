@@ -6,13 +6,18 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h2>Line Drawing App (Web) with Undo/Redo</h2>
+  <h2>🎨 Line Drawing App (Web) with Undo/Redo</h2>
+
   <div id="toolbar">
     <button onclick="undo()">Undo</button>
     <button onclick="redo()">Redo</button>
   </div>
-  <canvas id="canvas" width="800" height="600"></canvas>
+
+  <div class="canvas-frame">
+    <canvas id="canvas" width="800" height="600"></canvas>
+  </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>
