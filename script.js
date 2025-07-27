@@ -5,8 +5,15 @@ let isDrawing = false;
 let startX = 0;
 let startY = 0;
 
-let lines = []; // Store lines for undo
-let redoStack = []; // Store undone lines
+let lines = [];
+let redoStack = [];
+
+// Load saved lines from localStorage on page load
+const saved = localStorage.getItem("savedLines");
+if (saved) {
+  lines = JSON.parse(saved);
+  drawLines();
+}
 
 canvas.addEventListener("mousedown", (e) => {
   startX = e.offsetX;
@@ -21,7 +28,6 @@ canvas.addEventListener("mouseup", (e) => {
   const endY = e.offsetY;
   lines.push({ startX, startY, endX, endY });
   redoStack = []; // Clear redo on new draw
-
   drawLines();
   isDrawing = false;
 });
@@ -36,6 +42,9 @@ function drawLines() {
     ctx.lineWidth = 2;
     ctx.stroke();
   }
+
+  // Save current drawing to localStorage
+  localStorage.setItem("savedLines", JSON.stringify(lines));
 }
 
 function undo() {
@@ -52,4 +61,18 @@ function redo() {
     lines.push(line);
     drawLines();
   }
+}
+
+function clearCanvas() {
+  lines = [];
+  redoStack = [];
+  drawLines();
+  localStorage.removeItem("savedLines");
+}
+
+function saveAsImage() {
+  const link = document.createElement("a");
+  link.download = "line-drawing.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
 }
