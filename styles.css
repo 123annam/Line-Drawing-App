@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f4f4f4;
+  background: #f0f0f0;
   text-align: center;
   margin: 0;
   padding: 0;
@@ -8,40 +8,46 @@ body {
 
 h2 {
   margin-top: 30px;
-  font-size: 28px;
+  font-size: 26px;
   color: #333;
 }
 
 #toolbar {
-  margin: 20px 0;
+  margin: 20px;
 }
 
-#toolbar button {
-  padding: 10px 20px;
-  margin: 0 10px;
+#toolbar button, #toolbar select {
+  padding: 10px 15px;
+  margin: 5px;
   font-size: 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  background: linear-gradient(to right, #ff6a00, #ee0979);
+  background: linear-gradient(to right, #36d1dc, #5b86e5);
   color: white;
-  transition: transform 0.2s;
+  transition: 0.3s;
 }
 
 #toolbar button:hover {
   transform: scale(1.05);
 }
 
+#toolbar select {
+  background: white;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
 .canvas-frame {
   display: inline-block;
-  padding: 10px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #00f260, #0575e6); /* colorful border */
+  padding: 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #00f260, #0575e6);
 }
 
 #canvas {
-  border: 5px solid white;
-  background-color: white;
+  background: #fff;
+  border: 4px solid #fff;
   border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }

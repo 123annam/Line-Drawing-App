@@ -2,13 +2,10 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let isDrawing = false;
-let startX = 0;
-let startY = 0;
-
+let startX, startY;
 let lines = [];
 let redoStack = [];
 
-// Load saved lines from localStorage on page load
 const saved = localStorage.getItem("savedLines");
 if (saved) {
   lines = JSON.parse(saved);
@@ -23,11 +20,10 @@ canvas.addEventListener("mousedown", (e) => {
 
 canvas.addEventListener("mouseup", (e) => {
   if (!isDrawing) return;
-
   const endX = e.offsetX;
   const endY = e.offsetY;
   lines.push({ startX, startY, endX, endY });
-  redoStack = []; // Clear redo on new draw
+  redoStack = [];
   drawLines();
   isDrawing = false;
 });
@@ -42,23 +38,19 @@ function drawLines() {
     ctx.lineWidth = 2;
     ctx.stroke();
   }
-
-  // Save current drawing to localStorage
   localStorage.setItem("savedLines", JSON.stringify(lines));
 }
 
 function undo() {
   if (lines.length > 0) {
-    const line = lines.pop();
-    redoStack.push(line);
+    redoStack.push(lines.pop());
     drawLines();
   }
 }
 
 function redo() {
   if (redoStack.length > 0) {
-    const line = redoStack.pop();
-    lines.push(line);
+    lines.push(redoStack.pop());
     drawLines();
   }
 }
@@ -71,8 +63,60 @@ function clearCanvas() {
 }
 
 function saveAsImage() {
+  const format = document.getElementById("formatSelect").value;
+
+  if (format === "svg") {
+    exportToSVG();
+    return;
+  }
+
+  if (format === "pdf") {
+    exportToPDF();
+    return;
+  }
+
+  let mime = "image/png";
+  let ext = "png";
+
+  if (format === "jpeg") {
+    mime = "image/jpeg";
+    ext = "jpg";
+  } else if (format === "webp") {
+    mime = "image/webp";
+    ext = "webp";
+  }
+
   const link = document.createElement("a");
-  link.download = "line-drawing.png";
-  link.href = canvas.toDataURL("image/png");
+  link.download = `drawing.${ext}`;
+  link.href = canvas.toDataURL(mime);
   link.click();
+}
+
+function exportToSVG() {
+  let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}">`;
+
+  for (const line of lines) {
+    svgContent += `<line x1="${line.startX}" y1="${line.startY}" x2="${line.endX}" y2="${line.endY}" stroke="black" stroke-width="2"/>`;
+  }
+
+  svgContent += `</svg>`;
+
+  const blob = new Blob([svgContent], { type: "image/svg+xml" });
+  const link = document.createElement("a");
+  link.download = "drawing.svg";
+  link.href = URL.createObjectURL(blob);
+  link.click();
+}
+
+async function exportToPDF() {
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({
+    orientation: "landscape",
+    unit: "px",
+    format: [canvas.width, canvas.height],
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+  pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+  pdf.save("drawing.pdf");
 }
