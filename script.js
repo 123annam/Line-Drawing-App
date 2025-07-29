@@ -6,6 +6,7 @@ let startX, startY;
 let lines = [];
 let redoStack = [];
 
+// Load from localStorage
 const saved = localStorage.getItem("savedLines");
 if (saved) {
   lines = JSON.parse(saved);
@@ -121,7 +122,7 @@ async function exportToPDF() {
   pdf.save("drawing.pdf");
 }
 
-// 📝 Save to JSON file
+// Save to file
 function saveToFile() {
   const blob = new Blob([JSON.stringify(lines)], { type: "application/json" });
   const link = document.createElement("a");
@@ -130,7 +131,7 @@ function saveToFile() {
   link.click();
 }
 
-// 📂 Load from JSON file
+// Load from file
 function loadFromFile() {
   const fileInput = document.getElementById("fileInput");
   const file = fileInput.files[0];
