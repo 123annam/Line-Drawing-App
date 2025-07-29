@@ -16,7 +16,7 @@ h2 {
   margin: 20px;
 }
 
-#toolbar button, #toolbar select {
+#toolbar button, #toolbar select, #fileInput {
   padding: 10px 15px;
   margin: 5px;
   font-size: 16px;
@@ -35,6 +35,12 @@ h2 {
 #toolbar select {
   background: white;
   color: #333;
+  border: 1px solid #ccc;
+}
+
+#fileInput {
+  background: #ffffff;
+  color: #000000;
   border: 1px solid #ccc;
 }
 

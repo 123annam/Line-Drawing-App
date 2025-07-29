@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Line Drawing App with Format Export</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="UTF-8" />
+  <title>Line Drawing App with File Save/Load</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <h2>🎨 Line Drawing App (Web)</h2>
@@ -21,15 +20,16 @@
       <option value="svg">SVG</option>
       <option value="pdf">PDF</option>
     </select>
-
     <button onclick="saveAsImage()">Save</button>
+
+    <button onclick="saveToFile()">💾 Save to File</button>
+    <input type="file" id="fileInput" accept=".json" onchange="loadFromFile()" />
   </div>
 
   <div class="canvas-frame">
     <canvas id="canvas" width="800" height="600"></canvas>
   </div>
 
-  <!-- PDF Support Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>

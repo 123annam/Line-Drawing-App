@@ -120,3 +120,36 @@ async function exportToPDF() {
   pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
   pdf.save("drawing.pdf");
 }
+
+// 📝 Save to JSON file
+function saveToFile() {
+  const blob = new Blob([JSON.stringify(lines)], { type: "application/json" });
+  const link = document.createElement("a");
+  link.download = "drawing.json";
+  link.href = URL.createObjectURL(blob);
+  link.click();
+}
+
+// 📂 Load from JSON file
+function loadFromFile() {
+  const fileInput = document.getElementById("fileInput");
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (Array.isArray(data)) {
+        lines = data;
+        redoStack = [];
+        drawLines();
+      } else {
+        alert("Invalid drawing file.");
+      }
+    } catch (err) {
+      alert("Failed to load file.");
+    }
+  };
+  reader.readAsText(file);
+}
